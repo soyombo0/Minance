@@ -10,15 +10,54 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+    
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+        window.rootViewController = createTabbar()
+        self.window = window
+        window.makeKeyAndVisible()
+    }
+    
+    func createExchangeViewController() -> UINavigationController {
+        let exchangeVC = ExchangeViewController()
+        exchangeVC.title = "Exchange"
+        exchangeVC.tabBarItem = UITabBarItem(title: "Exchange", image: UIImage(systemName: "yensign.square"), tag: 0)
+        let exchangeNC = UINavigationController(rootViewController: exchangeVC)
+        exchangeNC.navigationBar.prefersLargeTitles = true
+        
+        return exchangeNC
+    }
+    
+    func createHomeViewController() -> UINavigationController {
+        let homeVC = HomeViewController()
+        homeVC.title = "Home"
+        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
+        let homeNC = UINavigationController(rootViewController: homeVC)
+        homeNC.navigationBar.prefersLargeTitles = true
+        
+        return homeNC
+    }
+    
+    func createSavedViewController() -> UINavigationController {
+        let savedVC = SavedViewController()
+        savedVC.title = "Saved"
+        savedVC.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "bookmark"), tag: 2)
+        let savedNC = UINavigationController(rootViewController: savedVC)
+        savedNC.navigationBar.prefersLargeTitles = true
+        
+        return savedNC
     }
 
+    func createTabbar() -> UITabBarController {
+        let tabBar = UITabBarController()
+        UITabBar.appearance().tintColor = .systemBlue
+        tabBar.viewControllers = [createExchangeViewController(),createHomeViewController(), createSavedViewController()]
+        
+        return tabBar
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
