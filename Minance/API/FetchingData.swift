@@ -10,13 +10,11 @@ import Foundation
 
 class FetchingData {
     
-    var coins = [Coin]()
+    static let shared = FetchingData()
     
-    init() {
-        parseData()
-    }
+    private init() {}
     
-    func parseData() {
+    public func parseData(completion: @escaping (Result<[Coin], Error>) -> Void) {
         
         let urlString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24"
         
@@ -27,16 +25,14 @@ class FetchingData {
                 print("Error appeared: \(error.localizedDescription)")
                 return
             }
-            
-            
-            
+
             guard let data = data else { return }
             
             do {
                 let coins = try JSONDecoder().decode([Coin].self, from: data)
-                self.coins = coins
+                completion(.success(coins))
             } catch let error {
-                print("decoding error: \(error)")
+                completion(.failure(error))
             }
         }.resume()
     }

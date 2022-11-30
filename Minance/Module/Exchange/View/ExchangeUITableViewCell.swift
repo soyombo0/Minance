@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 struct ExchangeTableViewCellModel {
-    let name: String
-    let image: String
+    let label: String
+    let symbol: String
     let price: String
 }
 
@@ -24,7 +24,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         return label
     }()
     
-    private let imageLabel: UILabel = {
+    private let symbolLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .regular)
         return label
@@ -34,6 +34,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .systemGray
         label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.textAlignment = .right
         return label
     }()
     
@@ -41,9 +42,8 @@ class ExchangeUITableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .orange
         contentView.addSubview(nameLabel)
-        contentView.addSubview(imageLabel)
+        contentView.addSubview(symbolLabel)
         contentView.addSubview(priceLabel)
     }
     
@@ -55,33 +55,33 @@ class ExchangeUITableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         nameLabel.sizeToFit()
-        imageLabel.sizeToFit()
+        symbolLabel.sizeToFit()
         priceLabel.sizeToFit()
         
         nameLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(5)
+            make.left.equalToSuperview().inset(15)
+            make.top.equalToSuperview().inset(3)
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
-        imageLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(5)
+        symbolLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(15)
             make.top.equalToSuperview().inset(contentView.frame.size.height/2)
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
         priceLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(contentView.frame.size.width/2 )
-            make.top.equalToSuperview().inset(0)
+            make.left.equalToSuperview().inset(contentView.frame.size.width/2 - 10)
+            make.centerY.equalToSuperview()
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
     }
     
     func configure(with viewModel: ExchangeTableViewCellModel) {
-        nameLabel.text = viewModel.name
-        imageLabel.text = viewModel.image
+        nameLabel.text = viewModel.label
+        symbolLabel.text = viewModel.symbol
         priceLabel.text = viewModel.price
     }
     
