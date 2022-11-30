@@ -168,14 +168,22 @@
 		3BAE41B9293452D2000B20BD /* Exchange */ = {
 			isa = PBXGroup;
 			children = (
-				3BAE41BA2934DF7A000B20BD /* ExchangeViewController.swift */,
+				3BBF413129365F7A0053FDDA /* View */,
 				3BAE41BE2934ECDF000B20BD /* ExchangePresenter.swift */,
 				3BAE41C02934ECE9000B20BD /* ExchangeInteractor.swift */,
 				3BAE41C22934ECF3000B20BD /* ExchangeRouter.swift */,
 				3BBF41292936216E0053FDDA /* ExchangeEntity.swift */,
-				3BBF412F293635030053FDDA /* ExchangeUITableViewCell.swift */,
 			);
 			path = Exchange;
+			sourceTree = "<group>";
+		};
+		3BBF413129365F7A0053FDDA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3BBF412F293635030053FDDA /* ExchangeUITableViewCell.swift */,
+				3BAE41BA2934DF7A000B20BD /* ExchangeViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
