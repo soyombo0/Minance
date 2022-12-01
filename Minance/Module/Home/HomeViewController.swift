@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
     
     let coinTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Coin"
+        textField.placeholder = "Bitcoin"
         textField.textAlignment = .center
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
@@ -39,10 +39,18 @@ class HomeViewController: UIViewController {
         return textField
     }()
     
+    var pickerView = UIPickerView()
+    
+    var picker = ["sdasd", "sdsad"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        coinTextField.inputView = pickerView
     }
     
     
@@ -63,4 +71,24 @@ class HomeViewController: UIViewController {
         }
     }
 
+}
+
+extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return picker[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        coinTextField.text = picker[row]
+        coinTextField.resignFirstResponder()
+    }
+    
 }

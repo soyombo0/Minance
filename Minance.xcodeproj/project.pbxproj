@@ -33,6 +33,7 @@
 		3BBF412C293621800053FDDA /* FetchingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBF412B293621800053FDDA /* FetchingData.swift */; };
 		3BBF412E293623BF0053FDDA /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBF412D293623BF0053FDDA /* DataModel.swift */; };
 		3BBF4130293635030053FDDA /* ExchangeUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBF412F293635030053FDDA /* ExchangeUITableViewCell.swift */; };
+		3BFDC2B129395B60004AB276 /* MarketSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFDC2B029395B60004AB276 /* MarketSecondView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		3BBF412B293621800053FDDA /* FetchingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingData.swift; sourceTree = "<group>"; };
 		3BBF412D293623BF0053FDDA /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3BBF412F293635030053FDDA /* ExchangeUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeUITableViewCell.swift; sourceTree = "<group>"; };
+		3BFDC2B029395B60004AB276 /* MarketSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSecondView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 			children = (
 				3BBF412F293635030053FDDA /* ExchangeUITableViewCell.swift */,
 				3BAE41BA2934DF7A000B20BD /* ExchangeViewController.swift */,
+				3BFDC2B029395B60004AB276 /* MarketSecondView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				3BAE41BF2934ECDF000B20BD /* ExchangePresenter.swift in Sources */,
 				3BAE41B129344865000B20BD /* SavedViewController.swift in Sources */,
 				3BAE41AB293445D1000B20BD /* HomePresenter.swift in Sources */,
+				3BFDC2B129395B60004AB276 /* MarketSecondView.swift in Sources */,
 				3BAE41BB2934DF7A000B20BD /* ExchangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

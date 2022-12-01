@@ -43,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func createSavedViewController() -> UINavigationController {
         let savedVC = SavedViewController()
         savedVC.title = "Saved"
-        savedVC.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "bookmark"), tag: 2)
+        savedVC.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "bookmark.fill"), tag: 2)
         let savedNC = UINavigationController(rootViewController: savedVC)
         savedNC.navigationBar.prefersLargeTitles = true
         

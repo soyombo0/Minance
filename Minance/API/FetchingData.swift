@@ -12,7 +12,7 @@ class FetchingData {
     
     static let shared = FetchingData()
     
-    private init() {}
+    init() {}
     
     public func parseData(completion: @escaping (Result<[Coin], Error>) -> Void) {
         

@@ -6,7 +6,7 @@
 //
 import Foundation
 import UIKit
-import Kingfisher
+
 
 class ExchangeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -34,12 +34,15 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-
+        loadData()
+    }
+    
+    func loadData() {
         FetchingData.shared.parseData { [weak self] result in
             switch result {
             case .success(let models):
+                
                 self?.viewModels = models.compactMap( {
-
                     ExchangeTableViewCellModel(
                         label: $0.name,
                         symbol: $0.symbol,
@@ -56,7 +59,6 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         }
         tableView.reloadData()
     }
-    
 }
 
 
@@ -73,5 +75,11 @@ extension ExchangeViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let controller = MarketSecondView()
+        controller.modalPresentationStyle = .formSheet
+        controller.nameLabel.text = viewModels[indexPath.row].label
+        controller.symbolLabel.text = viewModels[indexPath.row].symbol
+        controller.priceLabel.text = viewModels[indexPath.row].price
+        present(controller, animated: true)
     }
 }

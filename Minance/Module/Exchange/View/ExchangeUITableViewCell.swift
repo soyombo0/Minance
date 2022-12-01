@@ -38,6 +38,13 @@ class ExchangeUITableViewCell: UITableViewCell {
         return label
     }()
     
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 32)
+        return button
+    }()
+    
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -45,6 +52,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(symbolLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(button)
     }
     
     
@@ -58,7 +66,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         nameLabel.sizeToFit()
         symbolLabel.sizeToFit()
         priceLabel.sizeToFit()
-        imageView?.sizeToFit()
+        button.sizeToFit()
         
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(15)
@@ -72,8 +80,12 @@ class ExchangeUITableViewCell: UITableViewCell {
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
+        button.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(5)
+        }
         priceLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(contentView.frame.size.width/2 - 10)
+            make.right.equalTo(button).inset(25)
             make.centerY.equalToSuperview()
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
