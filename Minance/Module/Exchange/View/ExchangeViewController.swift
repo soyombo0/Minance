@@ -6,10 +6,11 @@
 //
 import Foundation
 import UIKit
-import SnapKit
+import Kingfisher
 
 class ExchangeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
+//  VARIABLES
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ExchangeUITableViewCell.self, forCellReuseIdentifier: ExchangeUITableViewCell.identifier)
@@ -18,24 +19,32 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     
     private var viewModels = [ExchangeTableViewCellModel]()
-
+    
+    
+// Layouts
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.ba
         view.backgroundColor = .systemBackground
+        tableView.backgroundColor = .systemBackground
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         FetchingData.shared.parseData { [weak self] result in
             switch result {
             case .success(let models):
                 self?.viewModels = models.compactMap( {
+
                     ExchangeTableViewCellModel(
                         label: $0.name,
                         symbol: $0.symbol,
-                        price: "\(round($0.currentPrice * 1000) / 1000.0)")
-                })
+                        price: "\(round($0.currentPrice * 1000) / 1000.0)"
+                )})
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
@@ -48,12 +57,10 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-        
-    }
-    
+}
+
+
+extension ExchangeViewController {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModels.count
@@ -64,6 +71,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
-
-

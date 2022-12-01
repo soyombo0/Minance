@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createExchangeViewController() -> UINavigationController {
         let exchangeVC = ExchangeViewController()
-        exchangeVC.title = "Exchange"
-        exchangeVC.tabBarItem = UITabBarItem(title: "Exchange", image: UIImage(systemName: "yensign.square"), tag: 0)
+        exchangeVC.title = "Market"
+        exchangeVC.tabBarItem = UITabBarItem(title: "Market", image: UIImage(systemName: "bitcoinsign.circle"), tag: 0)
         let exchangeNC = UINavigationController(rootViewController: exchangeVC)
         exchangeNC.navigationBar.prefersLargeTitles = true
         

@@ -58,6 +58,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         nameLabel.sizeToFit()
         symbolLabel.sizeToFit()
         priceLabel.sizeToFit()
+        imageView?.sizeToFit()
         
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(15)
