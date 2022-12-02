@@ -19,6 +19,9 @@ protocol HomeViewControllerOutput {
 
 class HomeViewController: UIViewController {
     
+    var priceData = [String]()
+    var nameData = [String]()
+    
     let fiatTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Fiat"
@@ -51,8 +54,23 @@ class HomeViewController: UIViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         coinTextField.inputView = pickerView
+        loadData()
     }
     
+    private func loadData() {
+        FetchingData.shared.parseData { [self] result in
+            switch result {
+            case .success(let models):
+                models.map({
+                    self.nameData.append($0.name)
+                    self.priceData.append("\($0.currentPrice)")
+                })
+            case .failure(let error):
+                print("error: \(error)")
+            }
+        }
+
+    }
     
     private func setView() {
         view.addSubview(fiatTextField)
@@ -79,16 +97,17 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 2
+        return nameData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return picker[row]
+        return nameData[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        coinTextField.text = picker[row]
+        coinTextField.text = nameData[row]
         coinTextField.resignFirstResponder()
+        fiatTextField.text = priceData[row]
     }
     
 }

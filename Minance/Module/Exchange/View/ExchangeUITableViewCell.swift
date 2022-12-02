@@ -12,7 +12,7 @@ struct ExchangeTableViewCellModel {
     let label: String
     let symbol: String
     let price: String
-    let imageUrl: URL?
+    var imageUrl: URL?
     var imageData: Data? = nil
     
     init(
@@ -52,13 +52,6 @@ class ExchangeUITableViewCell: UITableViewCell {
         return label
     }()
     
-    private let button: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 32)
-        return button
-    }()
-    
     private let coinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -72,7 +65,6 @@ class ExchangeUITableViewCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(symbolLabel)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(button)
         contentView.addSubview(coinImageView)
     }
     
@@ -87,11 +79,10 @@ class ExchangeUITableViewCell: UITableViewCell {
         nameLabel.sizeToFit()
         symbolLabel.sizeToFit()
         priceLabel.sizeToFit()
-        button.sizeToFit()
         
         coinImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(10)
+            make.left.equalToSuperview().inset(16)
             make.height.width.equalTo(35)
         }
         nameLabel.snp.makeConstraints { make in
@@ -106,16 +97,20 @@ class ExchangeUITableViewCell: UITableViewCell {
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
-        button.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(5)
-        }
         priceLabel.snp.makeConstraints { make in
-            make.right.equalTo(button).inset(25)
+            make.right.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.text = nil
+        symbolLabel.text = nil
+        priceLabel.text = nil
+        coinImageView.image = nil
     }
     
     func configure(with viewModel: ExchangeTableViewCellModel) {
@@ -129,6 +124,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         else if let url = viewModel.imageUrl {
             URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
                 guard let data = data, error == nil else { return }
+                var viewModel = viewModel
                 viewModel.imageData = data
                 DispatchQueue.main.async {
                     self?.coinImageView.image = UIImage(data: data)
