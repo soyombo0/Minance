@@ -12,6 +12,20 @@ struct ExchangeTableViewCellModel {
     let label: String
     let symbol: String
     let price: String
+    let imageUrl: URL?
+    var imageData: Data? = nil
+    
+    init(
+        label: String,
+        symbol: String,
+        price: String,
+        imageUrl: URL?
+    ) {
+        self.label = label
+        self.symbol = symbol
+        self.price = price
+        self.imageUrl = imageUrl
+    }
 }
 
 class ExchangeUITableViewCell: UITableViewCell {
@@ -45,6 +59,12 @@ class ExchangeUITableViewCell: UITableViewCell {
         return button
     }()
     
+    private let coinImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,6 +73,7 @@ class ExchangeUITableViewCell: UITableViewCell {
         contentView.addSubview(symbolLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(button)
+        contentView.addSubview(coinImageView)
     }
     
     
@@ -68,14 +89,19 @@ class ExchangeUITableViewCell: UITableViewCell {
         priceLabel.sizeToFit()
         button.sizeToFit()
         
+        coinImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().inset(10)
+            make.height.width.equalTo(35)
+        }
         nameLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(15)
+            make.left.equalTo(coinImageView).inset(40)
             make.top.equalToSuperview().inset(3)
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
         }
         symbolLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(15)
+            make.left.equalTo(coinImageView).inset(40)
             make.top.equalToSuperview().inset(contentView.frame.size.height/2)
             make.height.equalTo(contentView.frame.size.height/2)
             make.width.equalTo(contentView.frame.size.width/2)
@@ -96,7 +122,20 @@ class ExchangeUITableViewCell: UITableViewCell {
         nameLabel.text = viewModel.label
         symbolLabel.text = viewModel.symbol
         priceLabel.text = viewModel.price
-    }
+        
+        if let data = viewModel.imageData {
+            coinImageView.image = UIImage(data: data)
+        }
+        else if let url = viewModel.imageUrl {
+            URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+                guard let data = data, error == nil else { return }
+                viewModel.imageData = data
+                DispatchQueue.main.async {
+                    self?.coinImageView.image = UIImage(data: data)
+                }
+            }.resume()
+        }
+    }   
     
     
 }

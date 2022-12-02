@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 
-class ExchangeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ExchangeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
 //  VARIABLES
     let tableView: UITableView = {
@@ -20,6 +20,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
     
     private var viewModels = [ExchangeTableViewCellModel]()
     
+    let searchView = UISearchController(searchResultsController: nil)
     
 // Layouts
     override func viewDidLayoutSubviews() {
@@ -35,6 +36,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         loadData()
+        searchBar()
     }
     
     func loadData() {
@@ -46,7 +48,8 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
                     ExchangeTableViewCellModel(
                         label: $0.name,
                         symbol: $0.symbol,
-                        price: "\(round($0.currentPrice * 1000) / 1000.0)"
+                        price: "\(round($0.currentPrice * 1000) / 1000.0)",
+                        imageUrl: URL(string: $0.image)
                 )})
                 
                 DispatchQueue.main.async {
@@ -58,6 +61,11 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         tableView.reloadData()
+    }
+    
+    func searchBar() {
+        navigationItem.searchController = searchView
+        searchView.searchBar.delegate = self
     }
 }
 
@@ -80,6 +88,12 @@ extension ExchangeViewController {
         controller.nameLabel.text = viewModels[indexPath.row].label
         controller.symbolLabel.text = viewModels[indexPath.row].symbol
         controller.priceLabel.text = viewModels[indexPath.row].price
+        controller.coinImageView.image = 
         present(controller, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text, !text.isEmpty else { return }
+        print(text)
     }
 }

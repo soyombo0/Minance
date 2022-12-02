@@ -37,6 +37,12 @@ class MarketSecondView: UIViewController {
         return label
     }()
     
+    let coinImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +51,17 @@ class MarketSecondView: UIViewController {
     }
     
     private func setView() {
+        
+        view.addSubview(coinImageView)
+        coinImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().inset(300)
+        }
+        
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(300)
+            make.top.equalTo(coinImageView).inset(50)
         }
         
         view.addSubview(symbolLabel)
@@ -62,5 +75,6 @@ class MarketSecondView: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(symbolLabel).inset(50)
         }
+        
     }
 }
