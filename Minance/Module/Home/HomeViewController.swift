@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
         textField.layer.cornerRadius = 10
+        textField.keyboardType = .decimalPad
         return textField
     }()
     
@@ -67,7 +68,7 @@ class HomeViewController: UIViewController {
         usdTextField.delegate = self
         coinTextField.inputView = pickerView
         loadData()
-        
+        hideKeyboard()
     }
     
     
@@ -117,11 +118,21 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        view.addGestureRecognizer(tap)
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let fiat = Double(fiatTextField.text ?? "333") ?? 0.0
-        let usd = Double(usdTextField.text ?? "0") ?? 0.0
-        
+        let fiat = Double(fiatTextField.text ?? "1") ?? 1.0
+        let usd = Double(usdTextField.text ?? "1") ?? 1.0
         fiatTextField.text = "\(fiat * usd)"
     }
     

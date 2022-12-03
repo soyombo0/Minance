@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B20ADC729380B87007E1F40 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3B20ADC629380B87007E1F40 /* Kingfisher */; };
+		3B48132F293BEBF100836D50 /* SavedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B48132D293BEBF100836D50 /* SavedList+CoreDataClass.swift */; };
+		3B481330293BEBF100836D50 /* SavedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B48132E293BEBF100836D50 /* SavedList+CoreDataProperties.swift */; };
 		3BAE418929343C8C000B20BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418829343C8C000B20BD /* AppDelegate.swift */; };
 		3BAE418B29343C8C000B20BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418A29343C8C000B20BD /* SceneDelegate.swift */; };
 		3BAE419329343C8C000B20BD /* Minance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */; };
@@ -20,7 +21,6 @@
 		3BAE41AB293445D1000B20BD /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41AA293445D1000B20BD /* HomePresenter.swift */; };
 		3BAE41B129344865000B20BD /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41B029344865000B20BD /* SavedViewController.swift */; };
 		3BAE41B4293448A2000B20BD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3BAE41B3293448A2000B20BD /* SnapKit */; };
-		3BAE41B7293448B1000B20BD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3BAE41B6293448B1000B20BD /* Alamofire */; };
 		3BAE41BB2934DF7A000B20BD /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41BA2934DF7A000B20BD /* ExchangeViewController.swift */; };
 		3BAE41BF2934ECDF000B20BD /* ExchangePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41BE2934ECDF000B20BD /* ExchangePresenter.swift */; };
 		3BAE41C12934ECE9000B20BD /* ExchangeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41C02934ECE9000B20BD /* ExchangeInteractor.swift */; };
@@ -37,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B48132D293BEBF100836D50 /* SavedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3B48132E293BEBF100836D50 /* SavedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3BAE418529343C8C000B20BD /* Minance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BAE418829343C8C000B20BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3BAE418A29343C8C000B20BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,18 +72,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B20ADC729380B87007E1F40 /* Kingfisher in Frameworks */,
 				3BAE41B4293448A2000B20BD /* SnapKit in Frameworks */,
-				3BAE41B7293448B1000B20BD /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B481331293BEBF900836D50 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				3B48132D293BEBF100836D50 /* SavedList+CoreDataClass.swift */,
+				3B48132E293BEBF100836D50 /* SavedList+CoreDataProperties.swift */,
+				3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		3BAE417C29343C8C000B20BD = {
 			isa = PBXGroup;
 			children = (
+				3B481331293BEBF900836D50 /* Core Data */,
 				3BAE418729343C8C000B20BD /* Minance */,
 				3BAE418629343C8C000B20BD /* Products */,
 			);
@@ -102,7 +113,6 @@
 				3BAE41A029344507000B20BD /* Helpers */,
 				3BAE419F29343D4C000B20BD /* Application */,
 				3BAE41B82934529A000B20BD /* Module */,
-				3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */,
 			);
 			path = Minance;
 			sourceTree = "<group>";
@@ -209,8 +219,6 @@
 			name = Minance;
 			packageProductDependencies = (
 				3BAE41B3293448A2000B20BD /* SnapKit */,
-				3BAE41B6293448B1000B20BD /* Alamofire */,
-				3B20ADC629380B87007E1F40 /* Kingfisher */,
 			);
 			productName = Minance;
 			productReference = 3BAE418529343C8C000B20BD /* Minance.app */;
@@ -274,6 +282,7 @@
 				3BBF4120293504FA0053FDDA /* SavedRouter.swift in Sources */,
 				3BAE418929343C8C000B20BD /* AppDelegate.swift in Sources */,
 				3BBF4130293635030053FDDA /* ExchangeUITableViewCell.swift in Sources */,
+				3B481330293BEBF100836D50 /* SavedList+CoreDataProperties.swift in Sources */,
 				3BBF41242935050F0053FDDA /* SavedEntity.swift in Sources */,
 				3BBF412A2936216E0053FDDA /* ExchangeEntity.swift in Sources */,
 				3BBF4122293505040053FDDA /* SavedInteractor.swift in Sources */,
@@ -281,6 +290,7 @@
 				3BAE418B29343C8C000B20BD /* SceneDelegate.swift in Sources */,
 				3BAE41A9293445C9000B20BD /* HomeEntity.swift in Sources */,
 				3BBF41262935051E0053FDDA /* SavedPresenter.swift in Sources */,
+				3B48132F293BEBF100836D50 /* SavedList+CoreDataClass.swift in Sources */,
 				3BAE419329343C8C000B20BD /* Minance.xcdatamodeld in Sources */,
 				3BAE41A7293445BF000B20BD /* HomeInteractor.swift in Sources */,
 				3BAE41C12934ECE9000B20BD /* ExchangeInteractor.swift in Sources */,
@@ -537,20 +547,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3B20ADC629380B87007E1F40 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3B20ADC529380B87007E1F40 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
 		3BAE41B3293448A2000B20BD /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3BAE41B2293448A2000B20BD /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		3BAE41B6293448B1000B20BD /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3BAE41B5293448B1000B20BD /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -91,10 +91,7 @@ extension ExchangeViewController {
         controller.nameLabel.text = viewModels[indexPath.row].label
         controller.symbolLabel.text = viewModels[indexPath.row].symbol
         controller.priceLabel.text = viewModels[indexPath.row].price
-//        if let viewModels[indexPath.row].imageData {
-//            controller.coinImageView.image =UIImage(data: viewModels[indexPath.row].imageData)
-//        }
-//        controller.coinImageView.image =
+//        controller.coinImageView.image = UIImage(data: viewModels[indexPath.row].imageData ?? "d") ?? UIImage(systemName: "bitcoinsign")
         present(controller, animated: true)
     }
     
