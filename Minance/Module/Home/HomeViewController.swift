@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
     var priceData = [String]()
     var nameData = [String]()
     
+    
     let fiatTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Fiat"
@@ -29,6 +30,7 @@ class HomeViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
         textField.layer.cornerRadius = 10
+        textField.keyboardType = .decimalPad
         return textField
     }()
     
@@ -42,9 +44,18 @@ class HomeViewController: UIViewController {
         return textField
     }()
     
+    let usdTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Bitcoin"
+        textField.textAlignment = .center
+        textField.font = UIFont.systemFont(ofSize: 22)
+        textField.backgroundColor = .systemGray5
+        textField.layer.cornerRadius = 10
+        return textField
+    }()
+    
     var pickerView = UIPickerView()
     
-    var picker = ["sdasd", "sdsad"]
     
     
     override func viewDidLoad() {
@@ -53,9 +64,13 @@ class HomeViewController: UIViewController {
         setView()
         pickerView.delegate = self
         pickerView.dataSource = self
+        usdTextField.delegate = self
         coinTextField.inputView = pickerView
         loadData()
+        
     }
+    
+    
     
     private func loadData() {
         FetchingData.shared.parseData { [self] result in
@@ -87,15 +102,33 @@ class HomeViewController: UIViewController {
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
+        
+        view.addSubview(usdTextField)
+        usdTextField.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(fiatTextField).inset(50)
+            make.width.equalTo(150)
+            make.height.equalTo(30)
+        }
     }
 
 }
 
-extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let fiat = Double(fiatTextField.text ?? "333") ?? 0.0
+        let usd = Double(usdTextField.text ?? "0") ?? 0.0
+        
+        fiatTextField.text = "\(fiat * usd)"
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+        
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return nameData.count
     }
@@ -106,8 +139,9 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         coinTextField.text = nameData[row]
-        coinTextField.resignFirstResponder()
         fiatTextField.text = priceData[row]
+        coinTextField.resignFirstResponder()
+        fiatTextField.resignFirstResponder()
     }
     
 }

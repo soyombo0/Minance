@@ -21,6 +21,7 @@ class SavedViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setView()
+        
     }
     
     
