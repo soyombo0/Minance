@@ -52,7 +52,10 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
                         label: $0.name,
                         symbol: $0.symbol,
                         price: "\(round($0.currentPrice * 1000) / 1000.0)",
-                        imageUrl: URL(string: $0.image)
+                        imageUrl: URL(string: $0.image),
+                        highPrice: "\($0.high24H)",
+                        lowPrice: "\($0.low24H)",
+                        totalSupply: "\($0.totalSupply ?? 0)"
                 )})
                 
                 DispatchQueue.main.async {
@@ -91,33 +94,37 @@ extension ExchangeViewController {
         controller.nameLabel.text = viewModels[indexPath.row].label
         controller.symbolLabel.text = viewModels[indexPath.row].symbol
         controller.priceLabel.text = viewModels[indexPath.row].price
+        controller.highPriceLabel.text = viewModels[indexPath.row].highPrice
+        controller.lowPriceLabel.text = viewModels[indexPath.row].lowPrice
+        controller.totalSupplyLabel.text = viewModels[indexPath.row].totalSupply
+        
 //        controller.coinImageView.image = UIImage(data: viewModels[indexPath.row].imageData ?? "d") ?? UIImage(systemName: "bitcoinsign")
         present(controller, animated: true)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, !text.isEmpty else { return }
-        
-        FetchingData.shared.parseData { [weak self] result in
-            switch result {
-            case .success(let models):
-                
-                self?.viewModels = models.compactMap( {
-                    ExchangeTableViewCellModel(
-                        label: $0.name,
-                        symbol: $0.symbol,
-                        price: "\(round($0.currentPrice * 1000) / 1000.0)",
-                        imageUrl: URL(string: $0.image)
-                )})
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-                
-            case .failure(let error):
-                print("error: \(error)")
-            }
-        }
-        tableView.reloadData()
-    }
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        guard let text = searchBar.text, !text.isEmpty else { return }
+//
+//        FetchingData.shared.parseData { [weak self] result in
+//            switch result {
+//            case .success(let models):
+//
+//                self?.viewModels = models.compactMap( {
+//                    ExchangeTableViewCellModel(
+//                        label: $0.name,
+//                        symbol: $0.symbol,
+//                        price: "\(round($0.currentPrice * 1000) / 1000.0)",
+//                        imageUrl: URL(string: $0.image)
+//                )})
+//
+//                DispatchQueue.main.async {
+//                    self?.tableView.reloadData()
+//                }
+//
+//            case .failure(let error):
+//                print("error: \(error)")
+//            }
+//        }
+//        tableView.reloadData()
+//    }
 }

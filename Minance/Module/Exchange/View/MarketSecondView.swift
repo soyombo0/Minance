@@ -31,16 +31,33 @@ class MarketSecondView: UIViewController {
     
     let priceLabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 24, weight: .semibold)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    let highPriceLabel: UILabel = {
+        let label = UILabel()
         label.textColor = .systemGray
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .right
         return label
     }()
     
-    let coinImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        return imageView
+    let lowPriceLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    let totalSupplyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .right
+        return label
     }()
     
     
@@ -52,16 +69,10 @@ class MarketSecondView: UIViewController {
     
     private func setView() {
         
-        view.addSubview(coinImageView)
-        coinImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.top.equalToSuperview().inset(300)
-        }
-        
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(coinImageView).inset(50)
+            make.top.equalToSuperview().inset(30)
         }
         
         view.addSubview(symbolLabel)
@@ -73,7 +84,27 @@ class MarketSecondView: UIViewController {
         view.addSubview(priceLabel)
         priceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(symbolLabel).inset(50)
+            make.top.equalTo(symbolLabel).inset(100)
+        }
+        
+        view.addSubview(highPriceLabel)
+        highPriceLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(priceLabel).inset(80)
+        }
+        
+        
+        view.addSubview(lowPriceLabel)
+        lowPriceLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(highPriceLabel).inset(30)
+        }
+        
+        
+        view.addSubview(totalSupplyLabel)
+        totalSupplyLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(highPriceLabel).inset(80)
         }
         
     }

@@ -17,15 +17,19 @@ protocol HomeViewControllerOutput {
     
 }
 
+
+
 class HomeViewController: UIViewController {
     
     var priceData = [String]()
     var nameData = [String]()
+    var fiatPrice = "0.0"
     
+    let viewModel = [ExchangeTableViewCellModel]()
     
-    let fiatTextField: UITextField = {
+    let usdPriceLabel: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Fiat"
+        textField.placeholder = "USD price"
         textField.textAlignment = .center
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
@@ -36,7 +40,7 @@ class HomeViewController: UIViewController {
     
     let coinTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Bitcoin"
+        textField.placeholder = "Choose coin"
         textField.textAlignment = .center
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
@@ -44,16 +48,18 @@ class HomeViewController: UIViewController {
         return textField
     }()
     
-    let usdTextField: UITextField = {
+    let coinAmountLabel: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Bitcoin"
+        textField.placeholder = "Coin amount"
         textField.textAlignment = .center
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
         textField.layer.cornerRadius = 10
-        textField.keyboardType = .decimalPad
+        textField.keyboardType = .numbersAndPunctuation
         return textField
     }()
+    
+    
     
     var pickerView = UIPickerView()
     
@@ -65,7 +71,7 @@ class HomeViewController: UIViewController {
         setView()
         pickerView.delegate = self
         pickerView.dataSource = self
-        usdTextField.delegate = self
+        coinAmountLabel.delegate = self
         coinTextField.inputView = pickerView
         loadData()
         hideKeyboard()
@@ -89,8 +95,8 @@ class HomeViewController: UIViewController {
     }
     
     private func setView() {
-        view.addSubview(fiatTextField)
-        fiatTextField.snp.makeConstraints { make in
+        view.addSubview(usdPriceLabel)
+        usdPriceLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
             make.width.equalTo(150)
             make.height.equalTo(30)
@@ -99,15 +105,15 @@ class HomeViewController: UIViewController {
         view.addSubview(coinTextField)
         coinTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(fiatTextField).inset(50)
+            make.bottom.equalTo(usdPriceLabel).inset(50)
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
         
-        view.addSubview(usdTextField)
-        usdTextField.snp.makeConstraints { make in
+        view.addSubview(coinAmountLabel)
+        coinAmountLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(fiatTextField).inset(50)
+            make.top.equalTo(usdPriceLabel).inset(50)
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
@@ -130,10 +136,17 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITe
         view.addGestureRecognizer(tap)
     }
     
+    
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let fiat = Double(fiatTextField.text ?? "1") ?? 1.0
-        let usd = Double(usdTextField.text ?? "1") ?? 1.0
-        fiatTextField.text = "\(fiat * usd)"
+        let fiat = Double(fiatPrice) ?? 1.0
+        let usd = Double(coinAmountLabel.text ?? "1") ?? 1.0
+        usdPriceLabel.text = "\(fiat * usd)"
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        coinAmountLabel.resignFirstResponder()
+        return true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -150,9 +163,12 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         coinTextField.text = nameData[row]
-        fiatTextField.text = priceData[row]
+        usdPriceLabel.text = priceData[row]
+        fiatPrice = priceData[row]
         coinTextField.resignFirstResponder()
-        fiatTextField.resignFirstResponder()
+        usdPriceLabel.resignFirstResponder()
+        
+        
     }
     
 }

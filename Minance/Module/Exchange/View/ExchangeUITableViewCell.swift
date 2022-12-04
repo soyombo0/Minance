@@ -14,17 +14,27 @@ struct ExchangeTableViewCellModel {
     let price: String
     var imageUrl: URL?
     var imageData: Data? = nil
+    let highPrice: String
+    let lowPrice: String
+    let totalSupply: String
+
     
     init(
         label: String,
         symbol: String,
         price: String,
-        imageUrl: URL?
+        imageUrl: URL?,
+        highPrice: String,
+        lowPrice: String,
+        totalSupply: String
     ) {
         self.label = label
         self.symbol = symbol
         self.price = price
         self.imageUrl = imageUrl
+        self.highPrice = highPrice
+        self.lowPrice = lowPrice
+        self.totalSupply = totalSupply
     }
 }
 
