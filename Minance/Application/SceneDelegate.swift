@@ -32,8 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createHomeViewController() -> UINavigationController {
         let homeVC = HomeViewController()
-        homeVC.title = "Home"
-        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
+        homeVC.title = "Converter"
+        homeVC.tabBarItem = UITabBarItem(title: "Converter", image: UIImage(systemName: "x.squareroot"), tag: 1)
         let homeNC = UINavigationController(rootViewController: homeVC)
         homeNC.navigationBar.prefersLargeTitles = true
         

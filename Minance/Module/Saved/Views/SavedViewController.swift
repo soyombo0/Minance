@@ -16,7 +16,7 @@ class SavedViewController: UIViewController {
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ExchangeUITableViewCell.self, forCellReuseIdentifier: ExchangeUITableViewCell.identifier)
+        tableView.register(SavedUITableViewCell.self, forCellReuseIdentifier: SavedUITableViewCell.identifier)
         return tableView
     }()
     
@@ -33,17 +33,6 @@ class SavedViewController: UIViewController {
     }
     
     @objc private func onTap() {
-//        let alert = UIAlertController(title: "New Item", message: "Enter new Item", preferredStyle: .alert)
-//        alert.addTextField(configurationHandler: nil)
-//        alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { [weak self] _ in
-//            guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else {
-//                return
-//            }
-//
-//            self?.createItem(name: text)
-//        }))
-//
-//        present(alert, animated: true)
         let itemsView = SavedSecondView()
         itemsView.modalPresentationStyle = .formSheet
         present(itemsView, animated: true)
@@ -119,38 +108,14 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = savedData[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ExchangeUITableViewCell.identifier, for: indexPath)
-        cell.textLabel?.text = data.name
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SavedUITableViewCell.identifier, for: indexPath) as? SavedUITableViewCell else { fatalError() }
+        cell.configureVC(with: data)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-//        let item = savedData[indexPath.row]
-        
-//        let sheet = UIAlertController(title: "Edit", message: nil, preferredStyle: .alert)
-//        sheet.addTextField(configurationHandler: nil)
-//        sheet.addAction(UIAlertAction(title: "Edit", style: .cancel, handler: { _ in
-//
-//            let alert = UIAlertController(title: "Edit", message: "Edit your item", preferredStyle: .alert)
-//            alert.addTextField(configurationHandler: nil)
-//            alert.textFields?.first?.text = item.name
-//            alert.addAction(UIAlertAction(title: "Save", style: .cancel, handler: { _ in
-//                guard let field = alert.textFields?.first, let newName = field.text, !newName.isEmpty else {
-//                    return
-//                }
-//
-//                self.updateItem(item: item, newName: newName)
-//            }))
-//
-//            self.present(alert, animated: true)
-//        }))
-//        sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
-//            self?.deleteItem(item: item)
-//        }))
-//        sheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in }))
-//        present(sheet, animated: true)
+        self.deleteItem(item: savedData[indexPath.row])
     }
     
     

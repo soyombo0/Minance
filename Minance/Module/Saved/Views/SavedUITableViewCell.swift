@@ -123,6 +123,25 @@ class SavedUITableViewCell: UITableViewCell {
         coinImageView.image = nil
     }
     
+    func configureVC(with viewModel: SavedList) {
+        nameLabel.text = viewModel.name
+        symbolLabel.text = viewModel.symbol
+        priceLabel.text = viewModel.price
+        if let data = viewModel.imageData {
+            coinImageView.image = UIImage(data: data)
+        }
+        else if let url = viewModel.imageUrl {
+            URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+                guard let data = data, error == nil else { return }
+                viewModel.imageData = data
+                DispatchQueue.main.async {
+                    self?.coinImageView.image = UIImage(data: data)
+                }
+            }.resume()
+        }
+        
+    }
+    
     func configure(with viewModel: SavedUITableViewCellModel) {
         nameLabel.text = viewModel.label
         symbolLabel.text = viewModel.symbol

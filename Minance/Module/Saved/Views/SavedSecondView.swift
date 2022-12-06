@@ -17,7 +17,7 @@ class SavedSecondView: UIViewController, UITableViewDelegate, UITableViewDataSou
         return tableView
     }()
     
-    let SavedVC = SavedViewController()
+    let SavedVC = SavedViewController().tableView
     
     private var viewModels = [SavedUITableViewCellModel]()
     
@@ -77,7 +77,7 @@ class SavedSecondView: UIViewController, UITableViewDelegate, UITableViewDataSou
         do {
             savedData = try context.fetch(SavedList.fetchRequest())
             DispatchQueue.main.async {
-                self.SavedVC.tableView.reloadData()
+                self.SavedVC.reloadData()
             }
         }
         catch {
@@ -85,9 +85,13 @@ class SavedSecondView: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
-    func createItem(name: String) {
+    func createItem(name: String, symbol: String, price: String, imageUrl: URL?, imageData: Data?) {
         let newItem = SavedList(context: context)
         newItem.name = name
+        newItem.symbol = symbol
+        newItem.price = price
+        newItem.imageUrl = imageUrl
+        newItem.imageData = imageData
         
         do {
             try context.save()
@@ -113,33 +117,11 @@ extension SavedSecondView {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.createItem(name: viewModels[indexPath.row].label)
-        
+        self.createItem(name: viewModels[indexPath.row].label,
+                        symbol: viewModels[indexPath.row].symbol,
+                        price: viewModels[indexPath.row].price,
+                        imageUrl: viewModels[indexPath.row].imageUrl,
+                        imageData: viewModels[indexPath.row].imageData
+        )
     }
-    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        guard let text = searchBar.text, !text.isEmpty else { return }
-//
-//        FetchingData.shared.parseData { [weak self] result in
-//            switch result {
-//            case .success(let models):
-//
-//                self?.viewModels = models.compactMap( {
-//                    ExchangeTableViewCellModel(
-//                        label: $0.name,
-//                        symbol: $0.symbol,
-//                        price: "\(round($0.currentPrice * 1000) / 1000.0)",
-//                        imageUrl: URL(string: $0.image)
-//                )})
-//
-//                DispatchQueue.main.async {
-//                    self?.tableView.reloadData()
-//                }
-//
-//            case .failure(let error):
-//                print("error: \(error)")
-//            }
-//        }
-//        tableView.reloadData()
-//    }
 }
