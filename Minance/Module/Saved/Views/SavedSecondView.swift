@@ -1,34 +1,33 @@
 //
-//  ExchangeViewController.swift
+//  SavedSecondView.swift
 //  Minance
 //
-//  Created by Soyombo Mantaagiin on 28.11.2022.
+//  Created by Soyombo Mantaagiin on 6.12.2022.
 //
-import Foundation
+
 import UIKit
 
-
-class ExchangeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class SavedSecondView: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
 //  VARIABLES
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(ExchangeUITableViewCell.self, forCellReuseIdentifier: ExchangeUITableViewCell.identifier)
+        tableView.register(SavedUITableViewCell.self, forCellReuseIdentifier: SavedUITableViewCell.identifier)
         tableView.backgroundColor = .systemBackground
         return tableView
     }()
     
-    private var viewModels = [ExchangeTableViewCellModel]()
+    let SavedVC = SavedViewController()
+    
+    private var viewModels = [SavedUITableViewCellModel]()
+    
+    private var savedData = [SavedList]()
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let searchView = UISearchController(searchResultsController: nil)
     
     var searchArray = [String]()
-    
-// Layouts
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        tableView.frame = view.bounds
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +37,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.frame = view.bounds
         loadData()
-        searchBar()
+//        searchBar()
     }
 
 // Funcs
@@ -48,7 +47,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
             case .success(let models):
                 
                 self?.viewModels = models.compactMap( {
-                    ExchangeTableViewCellModel(
+                    SavedUITableViewCellModel(
                         label: $0.name,
                         symbol: $0.symbol,
                         price: "\(round($0.currentPrice * 1000) / 1000.0)",
@@ -69,37 +68,53 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
     }
     
-    func searchBar() {
-        navigationItem.searchController = searchView
-        searchView.searchBar.delegate = self
+//    func searchBar() {
+//        navigationItem.searchController = searchView
+//        searchView.searchBar.delegate = self
+//    }
+    
+    func getItems() {
+        do {
+            savedData = try context.fetch(SavedList.fetchRequest())
+            DispatchQueue.main.async {
+                self.SavedVC.tableView.reloadData()
+            }
+        }
+        catch {
+            
+        }
+    }
+    
+    func createItem(name: String) {
+        let newItem = SavedList(context: context)
+        newItem.name = name
+        
+        do {
+            try context.save()
+            getItems()
+        }
+        catch {
+            
+        }
     }
 }
 
 // MARK: ExchangeViewcontroller
-extension ExchangeViewController {
+extension SavedSecondView {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModels.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ExchangeUITableViewCell.identifier, for: indexPath) as? ExchangeUITableViewCell else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SavedUITableViewCell.identifier, for: indexPath) as? SavedUITableViewCell else { fatalError() }
         cell.configure(with: viewModels[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let controller = MarketSecondView()
-        controller.modalPresentationStyle = .formSheet
-        controller.nameLabel.text = viewModels[indexPath.row].label
-        controller.symbolLabel.text = viewModels[indexPath.row].symbol
-        controller.priceLabel.text = viewModels[indexPath.row].price
-        controller.highPriceLabel.text = viewModels[indexPath.row].highPrice
-        controller.lowPriceLabel.text = viewModels[indexPath.row].lowPrice
-        controller.totalSupplyLabel.text = viewModels[indexPath.row].totalSupply
+        self.createItem(name: viewModels[indexPath.row].label)
         
-//        controller.coinImageView.image = UIImage(data: viewModels[indexPath.row].imageData ?? "d") ?? UIImage(systemName: "bitcoinsign")
-        present(controller, animated: true)
     }
     
 //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B48132F293BEBF100836D50 /* SavedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B48132D293BEBF100836D50 /* SavedList+CoreDataClass.swift */; };
 		3B481330293BEBF100836D50 /* SavedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B48132E293BEBF100836D50 /* SavedList+CoreDataProperties.swift */; };
+		3B5F05B5293E9862000D5D99 /* SavedSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F05B4293E9862000D5D99 /* SavedSecondView.swift */; };
+		3B5F05B7293E98B5000D5D99 /* SavedUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F05B6293E98B5000D5D99 /* SavedUITableViewCell.swift */; };
 		3BAE418929343C8C000B20BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418829343C8C000B20BD /* AppDelegate.swift */; };
 		3BAE418B29343C8C000B20BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418A29343C8C000B20BD /* SceneDelegate.swift */; };
 		3BAE419329343C8C000B20BD /* Minance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		3B48132D293BEBF100836D50 /* SavedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3B48132E293BEBF100836D50 /* SavedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3B5F05B4293E9862000D5D99 /* SavedSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSecondView.swift; sourceTree = "<group>"; };
+		3B5F05B6293E98B5000D5D99 /* SavedUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUITableViewCell.swift; sourceTree = "<group>"; };
 		3BAE418529343C8C000B20BD /* Minance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BAE418829343C8C000B20BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3BAE418A29343C8C000B20BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +91,16 @@
 				3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		3B5F05B2293E9844000D5D99 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3BAE41B029344865000B20BD /* SavedViewController.swift */,
+				3B5F05B4293E9862000D5D99 /* SavedSecondView.swift */,
+				3B5F05B6293E98B5000D5D99 /* SavedUITableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		3BAE417C29343C8C000B20BD = {
@@ -160,7 +174,7 @@
 		3BAE41AF2934483E000B20BD /* Saved */ = {
 			isa = PBXGroup;
 			children = (
-				3BAE41B029344865000B20BD /* SavedViewController.swift */,
+				3B5F05B2293E9844000D5D99 /* Views */,
 				3BBF411F293504FA0053FDDA /* SavedRouter.swift */,
 				3BBF4121293505040053FDDA /* SavedInteractor.swift */,
 				3BBF41232935050F0053FDDA /* SavedEntity.swift */,
@@ -284,6 +298,7 @@
 				3BBF4130293635030053FDDA /* ExchangeUITableViewCell.swift in Sources */,
 				3B481330293BEBF100836D50 /* SavedList+CoreDataProperties.swift in Sources */,
 				3BBF41242935050F0053FDDA /* SavedEntity.swift in Sources */,
+				3B5F05B7293E98B5000D5D99 /* SavedUITableViewCell.swift in Sources */,
 				3BBF412A2936216E0053FDDA /* ExchangeEntity.swift in Sources */,
 				3BBF4122293505040053FDDA /* SavedInteractor.swift in Sources */,
 				3BBF412E293623BF0053FDDA /* DataModel.swift in Sources */,
@@ -302,6 +317,7 @@
 				3BAE41B129344865000B20BD /* SavedViewController.swift in Sources */,
 				3BAE41AB293445D1000B20BD /* HomePresenter.swift in Sources */,
 				3BFDC2B129395B60004AB276 /* MarketSecondView.swift in Sources */,
+				3B5F05B5293E9862000D5D99 /* SavedSecondView.swift in Sources */,
 				3BAE41BB2934DF7A000B20BD /* ExchangeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
