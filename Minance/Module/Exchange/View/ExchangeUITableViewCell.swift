@@ -13,7 +13,7 @@ struct ExchangeTableViewCellModel {
     let symbol: String
     let price: String
     var imageUrl: URL?
-    var imageData: Data? = nil
+    var imageData: Data?
     let highPrice: String
     let lowPrice: String
     let totalSupply: String
@@ -42,21 +42,22 @@ class ExchangeUITableViewCell: UITableViewCell {
     
     static let identifier = "CustomTableViewCell"
     
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
     private let symbolLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .secondaryLabel
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .systemGray
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textAlignment = .right
         return label
@@ -125,7 +126,7 @@ class ExchangeUITableViewCell: UITableViewCell {
     
     func configure(with viewModel: ExchangeTableViewCellModel) {
         nameLabel.text = viewModel.label
-        symbolLabel.text = viewModel.symbol
+        symbolLabel.text = viewModel.symbol.uppercased()
         priceLabel.text = viewModel.price
         
         if let data = viewModel.imageData {

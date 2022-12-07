@@ -9,17 +9,17 @@ import UIKit
 import SnapKit
 
 
-protocol HomeViewControllerInput {
+protocol ConverterViewControllerInput {
     
 }
 
-protocol HomeViewControllerOutput {
+protocol ConverterViewControllerOutput {
     
 }
 
 
 
-class HomeViewController: UIViewController {
+class ConverterViewController: UIViewController {
     
     var priceData = [String]()
     var nameData = [String]()
@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
         textField.layer.cornerRadius = 10
+        textField.inputView = UIPickerView()
         return textField
     }()
     
@@ -55,35 +56,43 @@ class HomeViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 22)
         textField.backgroundColor = .systemGray5
         textField.layer.cornerRadius = 10
-        textField.keyboardType = .numbersAndPunctuation
+        textField.keyboardType = .decimalPad
         return textField
     }()
     
+    let dollarImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "dollarsign")
+        image.tintColor = .systemGray
+        return image
+    }()
     
+    let bitcoinImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "bitcoinsign")
+        image.tintColor = .systemGray
+        return image
+    }()
     
-    var pickerView = UIPickerView()
-    
-    
+    let pickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         setView()
+        loadData()
+        hideKeyboard()
+        view.backgroundColor = .systemBackground
         pickerView.delegate = self
         pickerView.dataSource = self
         coinAmountLabel.delegate = self
         coinTextField.inputView = pickerView
-        loadData()
-        hideKeyboard()
     }
     
-    
-    
     private func loadData() {
-        FetchingData.shared.parseData { [self] result in
+        FetchingData.shared.parseData { result in
             switch result {
             case .success(let models):
-                models.map({
+                models.forEach({
                     self.nameData.append($0.name)
                     self.priceData.append("\($0.currentPrice)")
                 })
@@ -95,34 +104,48 @@ class HomeViewController: UIViewController {
     }
     
     private func setView() {
-        view.addSubview(usdPriceLabel)
-        usdPriceLabel.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+        
+        view.addSubview(coinTextField)
+        coinTextField.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().inset(30)
             make.width.equalTo(150)
             make.height.equalTo(30)
         }
         
-        view.addSubview(coinTextField)
-        coinTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(usdPriceLabel).inset(50)
+        view.addSubview(usdPriceLabel)
+        usdPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(coinTextField).inset(50)
+            make.right.equalToSuperview().inset(50)
             make.width.equalTo(150)
             make.height.equalTo(30)
+        }
+        
+        view.addSubview(dollarImage)
+        dollarImage.snp.makeConstraints { make in
+            make.right.equalTo(usdPriceLabel).inset(155)
+            make.bottom.equalTo(usdPriceLabel).inset(4)
         }
         
         view.addSubview(coinAmountLabel)
         coinAmountLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(usdPriceLabel).inset(50)
+            make.bottom.equalTo(coinTextField).inset(50)
+            make.right.equalToSuperview().inset(50)
             make.width.equalTo(150)
             make.height.equalTo(30)
+        }
+        
+        view.addSubview(bitcoinImage)
+        bitcoinImage.snp.makeConstraints { make in
+            make.right.equalTo(coinAmountLabel).inset(155)
+            make.bottom.equalTo(coinAmountLabel).inset(4)
         }
     }
 
 }
 
 
-extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+extension ConverterViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -135,9 +158,7 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITe
         )
         view.addGestureRecognizer(tap)
     }
-    
-    
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         let fiat = Double(fiatPrice) ?? 1.0
         let usd = Double(coinAmountLabel.text ?? "1") ?? 1.0
@@ -167,8 +188,6 @@ extension HomeViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITe
         fiatPrice = priceData[row]
         coinTextField.resignFirstResponder()
         usdPriceLabel.resignFirstResponder()
-        
-        
     }
     
 }

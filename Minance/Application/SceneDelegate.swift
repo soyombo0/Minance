@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func createHomeViewController() -> UINavigationController {
-        let homeVC = HomeViewController()
+        let homeVC = ConverterViewController()
         homeVC.title = "Converter"
         homeVC.tabBarItem = UITabBarItem(title: "Converter", image: UIImage(systemName: "x.squareroot"), tag: 1)
         let homeNC = UINavigationController(rootViewController: homeVC)

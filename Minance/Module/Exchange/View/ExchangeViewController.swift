@@ -14,8 +14,13 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ExchangeUITableViewCell.self, forCellReuseIdentifier: ExchangeUITableViewCell.identifier)
-        tableView.backgroundColor = .systemBackground
         return tableView
+    }()
+    
+    lazy var refresher: UIRefreshControl = {
+        let refreshing = UIRefreshControl()
+        refreshing.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshing
     }()
     
     private var viewModels = [ExchangeTableViewCellModel]()
@@ -24,16 +29,11 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
     
     var searchArray = [String]()
     
-// Layouts
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        tableView.frame = view.bounds
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
+        tableView.refreshControl = refresher
         tableView.dataSource = self
         tableView.delegate = self
         tableView.frame = view.bounds
@@ -42,6 +42,14 @@ class ExchangeViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
 // Funcs
+    
+    @objc private func refresh(sender: UIRefreshControl) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            sender.endRefreshing()
+        }
+    }
+    
     func loadData() {
         FetchingData.shared.parseData { [weak self] result in
             switch result {
@@ -98,7 +106,7 @@ extension ExchangeViewController {
         controller.lowPriceLabel.text = viewModels[indexPath.row].lowPrice
         controller.totalSupplyLabel.text = viewModels[indexPath.row].totalSupply
         
-//        controller.coinImageView.image = UIImage(data: viewModels[indexPath.row].imageData ?? "d") ?? UIImage(systemName: "bitcoinsign")
+//        controller.coinImageView.image = UIImage(data: viewModels[indexPath.row].imageData)
         present(controller, animated: true)
     }
     

@@ -11,13 +11,12 @@
 		3B45B79C293FAAF7009CF129 /* SavedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B45B79A293FAAF7009CF129 /* SavedList+CoreDataProperties.swift */; };
 		3B5F05B5293E9862000D5D99 /* SavedSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F05B4293E9862000D5D99 /* SavedSecondView.swift */; };
 		3B5F05B7293E98B5000D5D99 /* SavedUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F05B6293E98B5000D5D99 /* SavedUITableViewCell.swift */; };
+		3B9FA5C8293FC808007269E9 /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FA5C7293FC808007269E9 /* ConverterViewController.swift */; };
 		3BAE418929343C8C000B20BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418829343C8C000B20BD /* AppDelegate.swift */; };
 		3BAE418B29343C8C000B20BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE418A29343C8C000B20BD /* SceneDelegate.swift */; };
 		3BAE419329343C8C000B20BD /* Minance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE419129343C8C000B20BD /* Minance.xcdatamodeld */; };
 		3BAE419529343C8D000B20BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BAE419429343C8D000B20BD /* Assets.xcassets */; };
 		3BAE419829343C8D000B20BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BAE419629343C8D000B20BD /* LaunchScreen.storyboard */; };
-		3BAE41A329344583000B20BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41A229344583000B20BD /* HomeViewController.swift */; };
-		3BAE41A5293445B3000B20BD /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41A4293445B3000B20BD /* HomeRouter.swift */; };
 		3BAE41A7293445BF000B20BD /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41A6293445BF000B20BD /* HomeInteractor.swift */; };
 		3BAE41A9293445C9000B20BD /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41A8293445C9000B20BD /* HomeEntity.swift */; };
 		3BAE41AB293445D1000B20BD /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE41AA293445D1000B20BD /* HomePresenter.swift */; };
@@ -43,6 +42,7 @@
 		3B45B79A293FAAF7009CF129 /* SavedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3B5F05B4293E9862000D5D99 /* SavedSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSecondView.swift; sourceTree = "<group>"; };
 		3B5F05B6293E98B5000D5D99 /* SavedUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUITableViewCell.swift; sourceTree = "<group>"; };
+		3B9FA5C7293FC808007269E9 /* ConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewController.swift; sourceTree = "<group>"; };
 		3BAE418529343C8C000B20BD /* Minance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BAE418829343C8C000B20BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3BAE418A29343C8C000B20BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,8 +50,6 @@
 		3BAE419429343C8D000B20BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BAE419729343C8D000B20BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3BAE419929343C8D000B20BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3BAE41A229344583000B20BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		3BAE41A4293445B3000B20BD /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		3BAE41A6293445BF000B20BD /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		3BAE41A8293445C9000B20BD /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
 		3BAE41AA293445D1000B20BD /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
@@ -153,8 +151,7 @@
 		3BAE41A129344558000B20BD /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				3BAE41A229344583000B20BD /* HomeViewController.swift */,
-				3BAE41A4293445B3000B20BD /* HomeRouter.swift */,
+				3B9FA5C7293FC808007269E9 /* ConverterViewController.swift */,
 				3BAE41A6293445BF000B20BD /* HomeInteractor.swift */,
 				3BAE41A8293445C9000B20BD /* HomeEntity.swift */,
 				3BAE41AA293445D1000B20BD /* HomePresenter.swift */,
@@ -301,16 +298,15 @@
 				3BBF412A2936216E0053FDDA /* ExchangeEntity.swift in Sources */,
 				3BBF4122293505040053FDDA /* SavedInteractor.swift in Sources */,
 				3BBF412E293623BF0053FDDA /* DataModel.swift in Sources */,
+				3B9FA5C8293FC808007269E9 /* ConverterViewController.swift in Sources */,
 				3BAE418B29343C8C000B20BD /* SceneDelegate.swift in Sources */,
 				3BAE41A9293445C9000B20BD /* HomeEntity.swift in Sources */,
 				3BBF41262935051E0053FDDA /* SavedPresenter.swift in Sources */,
 				3BAE419329343C8C000B20BD /* Minance.xcdatamodeld in Sources */,
 				3BAE41A7293445BF000B20BD /* HomeInteractor.swift in Sources */,
 				3BAE41C12934ECE9000B20BD /* ExchangeInteractor.swift in Sources */,
-				3BAE41A329344583000B20BD /* HomeViewController.swift in Sources */,
 				3B45B79C293FAAF7009CF129 /* SavedList+CoreDataProperties.swift in Sources */,
 				3B45B79B293FAAF7009CF129 /* SavedList+CoreDataClass.swift in Sources */,
-				3BAE41A5293445B3000B20BD /* HomeRouter.swift in Sources */,
 				3BAE41C32934ECF3000B20BD /* ExchangeRouter.swift in Sources */,
 				3BBF412C293621800053FDDA /* FetchingData.swift in Sources */,
 				3BAE41BF2934ECDF000B20BD /* ExchangePresenter.swift in Sources */,

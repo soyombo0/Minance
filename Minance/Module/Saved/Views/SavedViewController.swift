@@ -8,35 +8,56 @@
 import UIKit
 import SnapKit
 
-class SavedViewController: UIViewController {
-    
+class SavedViewController: UIViewController, SavedSecondViewOutput {
+
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private var savedData = [SavedList]()
+    
+    lazy var refresher: UIRefreshControl = {
+        let refreshing = UIRefreshControl()
+        refreshing.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshing
+    }()
     
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(SavedUITableViewCell.self, forCellReuseIdentifier: SavedUITableViewCell.identifier)
         return tableView
     }()
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         getItems()
+        tableView.refreshControl = refresher
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(onTap))
+    }
+
+    // Functions
+    
+    @objc private func refresh(sender: UIRefreshControl) {
+        DispatchQueue.main.async {
+            self.getItems()
+            sender.endRefreshing()
+        }
     }
     
     @objc private func onTap() {
         let itemsView = SavedSecondView()
+        itemsView.delegate = self
         itemsView.modalPresentationStyle = .formSheet
         present(itemsView, animated: true)
     }
+    
+    func tableViewDidDismiss(name: String, symbol: String, price: String, imageUrl: URL?, imageData: Data?) {
+        createItem(name: name, symbol: symbol, price: price, imageUrl: imageUrl, imageData: imageData)
+    }
+
     
     func getItems() {
         do {
@@ -50,25 +71,17 @@ class SavedViewController: UIViewController {
         }
     }
     
-    func createItem(name: String) {
+    func createItem(name: String, symbol: String, price: String, imageUrl: URL?, imageData: Data?) {
         let newItem = SavedList(context: context)
         newItem.name = name
+        newItem.symbol = symbol
+        newItem.price = price
+        newItem.imageUrl = imageUrl
+        newItem.imageData = imageData
         
         do {
             try context.save()
             getItems()
-        }
-        catch {
-            
-        }
-    }
-    
-    func saveItem(name: String) {
-        let newItem = SavedList(context: context)
-        newItem.name = name
-        
-        do {
-            try context.save()
         }
         catch {
             
@@ -86,20 +99,9 @@ class SavedViewController: UIViewController {
             
         }
     }
-    
-    func updateItem(item: SavedList, newName: String) {
-        item.name = newName
-        do {
-            try context.save()
-            getItems()
-        }
-        catch {
-            
-        }
-    }
-    
 }
 
+// MARK: SavedViewController
 extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,6 +119,5 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         self.deleteItem(item: savedData[indexPath.row])
     }
-    
     
 }

@@ -14,27 +14,17 @@ struct SavedUITableViewCellModel {
     let price: String
     var imageUrl: URL?
     var imageData: Data? = nil
-    let highPrice: String
-    let lowPrice: String
-    let totalSupply: String
-
     
     init(
         label: String,
         symbol: String,
         price: String,
-        imageUrl: URL?,
-        highPrice: String,
-        lowPrice: String,
-        totalSupply: String
+        imageUrl: URL?
     ) {
         self.label = label
         self.symbol = symbol
         self.price = price
         self.imageUrl = imageUrl
-        self.highPrice = highPrice
-        self.lowPrice = lowPrice
-        self.totalSupply = totalSupply
     }
 }
 
@@ -44,19 +34,20 @@ class SavedUITableViewCell: UITableViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
     private let symbolLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .secondaryLabel
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .systemGray
+//        label.textColor = .systemGray
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textAlignment = .right
         return label
@@ -125,8 +116,9 @@ class SavedUITableViewCell: UITableViewCell {
     
     func configureVC(with viewModel: SavedList) {
         nameLabel.text = viewModel.name
-        symbolLabel.text = viewModel.symbol
+        symbolLabel.text = viewModel.symbol?.uppercased()
         priceLabel.text = viewModel.price
+        
         if let data = viewModel.imageData {
             coinImageView.image = UIImage(data: data)
         }
@@ -144,7 +136,7 @@ class SavedUITableViewCell: UITableViewCell {
     
     func configure(with viewModel: SavedUITableViewCellModel) {
         nameLabel.text = viewModel.label
-        symbolLabel.text = viewModel.symbol
+        symbolLabel.text = viewModel.symbol.uppercased()
         priceLabel.text = viewModel.price
         
         if let data = viewModel.imageData {
